@@ -13,7 +13,8 @@ var
 	axis         = require('axis'),
 	rupture      = require('rupture'),
 	minifyCss    = require('gulp-minify-css'),
-	rename       = require('gulp-rename'),
+  rename       = require('gulp-rename'),
+	plumber      = require('plumber'),
 	browserSync  = require('browser-sync').create()
 
 
@@ -32,12 +33,19 @@ var stylus_options = {
 // Styles
 gulp.task('styles', function(){
 	return gulp.src('./styl/*.styl') // Two files get compiled here: main stylsheet (all partials imported) and editor stylesheet. Makes for simple gulpfile config, but maybe not best approach. Comments welcome! 
- 	.pipe(stylus(stylus_options))
+ 	.pipe(plumber())
+  .pipe(stylus(stylus_options))
 	.pipe(gulp.dest('./'))
 	.pipe(rename({ suffix: '.min' }))
 	.pipe(minifyCss())
 	.pipe(gulp.dest('./'))
   .pipe(browserSync.stream());
+});
+
+gulp.task('js', function() {
+  return gulp.src('./assets/js/main.js')
+    .pipe(uglify())
+    .pipe(gulp.dest('./assets/js/min'));
 });
 
 

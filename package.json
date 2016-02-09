@@ -17,10 +17,11 @@
     "gulp-rename": "^1.2.2",
     "gulp-stylus": "^2.0.5",
     "lost": "^6.7.1",
+    "plumber": "^0.4.8",
     "poststylus": "^0.2.2",
     "rucksack-css": "^0.8.5",
     "rupture": "^0.6.1",
-    "typographic": "^2.9.3"
+    "typographic": "^2.9.3",
+    "uglify": "^0.1.5"
   }
 }
-

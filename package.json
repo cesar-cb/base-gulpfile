@@ -13,7 +13,7 @@
     "browser-sync": "^2.7.13",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^2.3.1",
-    "gulp-minify-css": "^1.2.0",
+    "gulp-clean-css": "^2.0.10",
     "gulp-pug": "^3.0.3",
     "gulp-rename": "^1.2.2",
     "gulp-stylus": "^2.0.5",
@@ -24,5 +24,6 @@
     "rupture": "^0.6.1",
     "typographic": "^2.9.3",
     "uglify": "^0.1.5"
-  }
+  },
+  "dependencies": {}
 }

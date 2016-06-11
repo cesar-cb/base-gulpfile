@@ -13,7 +13,7 @@ rucksack     = require('rucksack-css'),
 typographic  = require('typographic'),
 axis         = require('axis'),
 rupture      = require('rupture'),
-minifyCss    = require('gulp-minify-css'),
+cleanCSS     = require('gulp-clean-css'),
 rename       = require('gulp-rename'),
 plumber      = require('plumber'),
 browserSync  = require('browser-sync').create()
@@ -38,7 +38,7 @@ gulp.task('styles', function(){
   .pipe(gulp.dest('./public/css'))
   .pipe(browserSync.stream())
   .pipe(rename({ suffix: '.min' }))
-  .pipe(minifyCss())
+  .pipe(cleanCSS({compatibility: 'ie8'}))
   .pipe(gulp.dest('./public/css'))
   
 });

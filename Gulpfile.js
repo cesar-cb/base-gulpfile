@@ -15,7 +15,7 @@ axis         = require('axis'),
 rupture      = require('rupture'),
 cleanCSS     = require('gulp-clean-css'),
 rename       = require('gulp-rename'),
-plumber      = require('plumber'),
+plumber      = require('gulp-plumber'),
 browserSync  = require('browser-sync').create()
 
 
@@ -34,6 +34,7 @@ var stylus_options = {
 
 gulp.task('styles', function(){
   return gulp.src('./app/stylus/*.styl') // Two files get compiled here: main stylsheet (all partials imported) and editor stylesheet. Makes for simple gulpfile config, but maybe not best approach. Comments welcome! 
+  .pipe(plumber())
   .pipe(stylus(stylus_options))
   .pipe(gulp.dest('./public/css'))
   .pipe(browserSync.stream())
@@ -45,6 +46,7 @@ gulp.task('styles', function(){
 
 gulp.task('pug', function buildHTML() {
   return gulp.src('./app/views/*.pug')
+  .pipe(plumber())
   .pipe(pug())
   .pipe(gulp.dest('./public'))
 });

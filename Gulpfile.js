@@ -14,6 +14,7 @@ typographic  = require('typographic'),
 axis         = require('axis'),
 rupture      = require('rupture'),
 cleanCSS     = require('gulp-clean-css'),
+uglify       = require('gulp-uglify'),
 rename       = require('gulp-rename'),
 plumber      = require('gulp-plumber'),
 browserSync  = require('browser-sync').create()
@@ -36,12 +37,10 @@ gulp.task('styles', function(){
   return gulp.src('./app/stylus/*.styl') // Two files get compiled here: main stylsheet (all partials imported) and editor stylesheet. Makes for simple gulpfile config, but maybe not best approach. Comments welcome! 
   .pipe(plumber())
   .pipe(stylus(stylus_options))
-  .pipe(gulp.dest('./public/css'))
-  .pipe(browserSync.stream())
   .pipe(rename({ suffix: '.min' }))
   .pipe(cleanCSS({compatibility: 'ie8'}))
   .pipe(gulp.dest('./public/css'))
-  
+  .pipe(browserSync.stream())
 });
 
 gulp.task('pug', function buildHTML() {
@@ -54,7 +53,9 @@ gulp.task('pug', function buildHTML() {
 gulp.task('js', function() {
   return gulp.src('./app/js/main.js')
   .pipe(uglify())
-  .pipe(gulp.dest('./public/js/min'));
+  .pipe(rename({ suffix: '.min' }))
+  .pipe(gulp.dest('./public/js'));
+
 });
 
 /* If you want proxy */
@@ -76,8 +77,10 @@ gulp.task('browser-sync', function() {
 });
 
 // Watch!
-gulp.task('default',['browser-sync', 'styles', 'pug'], function(){
+gulp.task('default',['browser-sync', 'styles', 'pug', 'js'], function(){
   gulp.watch('./app/stylus/**/*.styl', ['styles']);
   gulp.watch('./app/views/**/*.pug', ['pug']);
+  gulp.watch('./app/js/main.js', ['js']);
+  gulp.watch('./public/js/main.min.js').on('change', browserSync.reload);
   gulp.watch("./public/*.html").on('change', browserSync.reload);
 });
